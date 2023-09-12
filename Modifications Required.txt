@@ -1,6 +1,0 @@
-1. Grid View
-2. Welcome Text
-3. X-axis time thik kora lagbe
-4. Vertical height gula fixed.
-5. Analysis view: Channel Name, Total Duration, Zitter count, lowest Zitter duration, highest zitter duration per channel, Starting time, Last ending time
-6. .exe file universal
