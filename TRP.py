@@ -34,10 +34,10 @@ class MyWindow(QMainWindow):
             # Fetching data from the Excel file...
             file_name = QFileDialog.getOpenFileName(self, "Open File", "", "Excel Files (*.xlsx)")
             file = Files(file_name[0])
-            groups, start, finish = file.load_data_from_excel()
+            channel_data, times = file.load_data_from_excel()
             
             # Drawing the custom chart...
-            self.chart.plot_custom_chart(groups, start, finish)
+            self.chart.plot_custom_chart(channel_data, times)
             
         except Exception:
             print("Error...")
