@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.uic import loadUi
-from MyFile import *
-from MyChart import *
+from lib.MyChart import *
+from lib.MyFile import *
 import sys
 
 
@@ -11,7 +11,7 @@ import sys
 class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("interface.ui", self)
+        loadUi("lib\interface.ui", self)
         
         self.chart = CustomChart()
         
@@ -47,6 +47,6 @@ class MyWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MyWindow()
-    window.setWindowIcon(QIcon('logo.jpg'))
+    window.setWindowIcon(QIcon('Images\logo.jpg'))
     window.show()
     app.exec()
