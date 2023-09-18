@@ -18,12 +18,15 @@ class MyWindow(QMainWindow):
         # Define Widgets...
         menu_open_button = self.actionOpen
         
-        central_widget = self.centralwidget
-        chart_layout = self.verticalLayout
+        self.welcome_frame= self.findChild(QFrame, 'welcomeFrame')
+        self.chart_frame= self.findChild(QFrame, 'chartFrame')
+        
+        copyright_label = self.findChild(QLabel, 'copyright')
         
         # Edit widget UI...
-        central_widget.setLayout(chart_layout)
-        chart_layout.addWidget(self.chart.canvas)
+        self.chart_frame.hide()
+        
+        copyright_label.setText(f"© Md. Mahdi Mohtasim  {datetime.now().year}")
         
         # Triggering the buttons...
         menu_open_button.triggered.connect(self.menu_open_button_triggered)
@@ -37,6 +40,10 @@ class MyWindow(QMainWindow):
             groups, start, finish = file.load_data_from_excel()
             
             # Drawing the custom chart...
+            self.welcome_frame.hide()
+            self.chart_frame.show()
+            chart_layout = self.findChild(QVBoxLayout, 'verticalLayout_4')
+            chart_layout.addWidget(self.chart.canvas)
             self.chart.plot_custom_chart(groups, start, finish)
             
         except Exception:
