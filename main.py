@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 from PyQt5.uic import loadUi
 from lib.MyChart import *
 from lib.MyFile import *
@@ -14,11 +15,11 @@ class MyWindow(QMainWindow):
         loadUi("lib\interface.ui", self)
         
         self.chart = None
+        self.data = None
         
         # Define Widgets...
         menu_open_button = self.actionOpen
         
-        self.welcome_frame= self.findChild(QFrame, 'welcomeFrame')
         self.pages = self.findChild(QStackedWidget, 'stackedWidget')
         self.welcome_page= self.findChild(QWidget, 'welcomePage')
         self.chart_page= self.findChild(QWidget, 'chartPage')
@@ -27,35 +28,48 @@ class MyWindow(QMainWindow):
         
         # Edit widget UI...
         self.pages.setCurrentWidget(self.welcome_page)
+            # self.chart_frame.setStyleSheet("border: 2px solid black;")
         
         copyright_label.setText(f"© Md. Mahdi Mohtasim  {datetime.now().year}")
         
         # Triggering the buttons...
-        menu_open_button.triggered.connect(self.menu_open_button_triggered)
+        menu_open_button.triggered.connect(self.getDataFromFile)
+        
+        
+    def resizeEvent(self, event):
+        # This function will be called whenever the window is resized
+        new_size = event.size()
+        print(f"Window size changed to: {new_size.width()} x {new_size.height()}")
+        print(self.pages.currentIndex())
 
         
-    def menu_open_button_triggered(self):
+    def getDataFromFile(self):
         try:
             # Fetching data from the Excel file...
             file_name = QFileDialog.getOpenFileName(self, "Open File", "", "Excel Files (*.xlsx)")
             file = Files(file_name[0])
-            groups, start, finish = file.load_data_from_excel()
+            self.data= file.load_data_from_excel()
+        except Exception:
+            print("Error Fetching The File...")            
+        
+        self.drawCustomChart()
             
+    def drawCustomChart(self):
+        try:
             # Drawing the custom chart...
             if self.chart:
-                # Remove the canvas widget
-                self.chart.canvas.setParent(None)
-                # Destroy the canvas
-                self.chart.canvas.deleteLater()
+                self.chart.canvas.setParent(None)   # Remove the canvas widget
+                self.chart.canvas.deleteLater()     # Destroy the canvas
                 del self.chart
+                
             self.chart = CustomChart()
             self.pages.setCurrentWidget(self.chart_page)
-            chart_layout = self.findChild(QVBoxLayout, 'verticalLayout_4')
+            chart_layout = self.findChild(QVBoxLayout, 'verticalLayout')
             chart_layout.addWidget(self.chart.canvas)
-            self.chart.plot_custom_chart(groups, start, finish)
-            
+            self.chart.plot_custom_chart(self.data)
         except Exception:
-            print("Error...")
+            print("Error Drawing The File...")   
+        
 
 
 
