@@ -13,18 +13,20 @@ class MyWindow(QMainWindow):
         super().__init__()
         loadUi("lib\interface.ui", self)
         
-        self.chart = CustomChart()
+        self.chart = None
         
         # Define Widgets...
         menu_open_button = self.actionOpen
         
         self.welcome_frame= self.findChild(QFrame, 'welcomeFrame')
-        self.chart_frame= self.findChild(QFrame, 'chartFrame')
+        self.pages = self.findChild(QStackedWidget, 'stackedWidget')
+        self.welcome_page= self.findChild(QWidget, 'welcomePage')
+        self.chart_page= self.findChild(QWidget, 'chartPage')
         
         copyright_label = self.findChild(QLabel, 'copyright')
         
         # Edit widget UI...
-        self.chart_frame.hide()
+        self.pages.setCurrentWidget(self.welcome_page)
         
         copyright_label.setText(f"© Md. Mahdi Mohtasim  {datetime.now().year}")
         
@@ -40,8 +42,14 @@ class MyWindow(QMainWindow):
             groups, start, finish = file.load_data_from_excel()
             
             # Drawing the custom chart...
-            self.welcome_frame.hide()
-            self.chart_frame.show()
+            if self.chart:
+                # Remove the canvas widget
+                self.chart.canvas.setParent(None)
+                # Destroy the canvas
+                self.chart.canvas.deleteLater()
+                del self.chart
+            self.chart = CustomChart()
+            self.pages.setCurrentWidget(self.chart_page)
             chart_layout = self.findChild(QVBoxLayout, 'verticalLayout_4')
             chart_layout.addWidget(self.chart.canvas)
             self.chart.plot_custom_chart(groups, start, finish)
