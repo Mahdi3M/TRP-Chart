@@ -4,12 +4,13 @@ from PyQt5.QtCore import *
 from PyQt5.uic import loadUi
 from lib.MyChart import *
 from lib.MyFile import *
+from datetime import datetime
 import sys
 
 
 
 # The Main Frame class...
-class MyWindow(QMainWindow):
+class CustomWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         loadUi("lib\interface.ui", self)
@@ -19,10 +20,13 @@ class MyWindow(QMainWindow):
         
         # Define Widgets...
         menu_open_button = self.actionOpen
+        menu_chart_button = self.actionChart_View
+        menu_analysis_button = self.actionAnalysis_View
         
         self.pages = self.findChild(QStackedWidget, 'stackedWidget')
         self.welcome_page= self.findChild(QWidget, 'welcomePage')
         self.chart_page= self.findChild(QWidget, 'chartPage')
+        self.analysis_page= self.findChild(QWidget, 'analysisPage')
         
         copyright_label = self.findChild(QLabel, 'copyright')
         
@@ -34,13 +38,14 @@ class MyWindow(QMainWindow):
         
         # Triggering the buttons...
         menu_open_button.triggered.connect(self.getDataFromFile)
+        menu_chart_button.triggered.connect(self.drawCustomChart)
+        menu_analysis_button.triggered.connect(self.showAnalysisPage)
         
         
     def resizeEvent(self, event):
         # This function will be called whenever the window is resized
         new_size = event.size()
         print(f"Window size changed to: {new_size.width()} x {new_size.height()}")
-        print(self.pages.currentIndex())
 
         
     def getDataFromFile(self):
@@ -49,12 +54,24 @@ class MyWindow(QMainWindow):
             file_name = QFileDialog.getOpenFileName(self, "Open File", "", "Excel Files (*.xlsx)")
             file = Files(file_name[0])
             self.data= file.load_data_from_excel()
+            print("Data Fetched")
         except Exception:
-            print("Error Fetching The File...")            
+            print("Error Fetching The File...")
+            return     
         
-        self.drawCustomChart()
+        if self.pages.currentIndex() in [1]:
+            self.drawCustomChart()
+        elif self.pages.currentIndex() in [2]:
+            self.showAnalysisPage()
+        else:
+            self.drawCustomChart()
+            
             
     def drawCustomChart(self):
+        self.pages.setCurrentWidget(self.chart_page)
+        if not self.data:
+            self.getDataFromFile()
+            return
         try:
             # Drawing the custom chart...
             if self.chart:
@@ -63,19 +80,23 @@ class MyWindow(QMainWindow):
                 del self.chart
                 
             self.chart = CustomChart()
-            self.pages.setCurrentWidget(self.chart_page)
             chart_layout = self.findChild(QVBoxLayout, 'verticalLayout')
             chart_layout.addWidget(self.chart.canvas)
             self.chart.plot_custom_chart(self.data)
         except Exception:
-            print("Error Drawing The File...")   
+            print("Error Drawing The File...")
+            return
+            
+            
+    def showAnalysisPage(self):
+        self.pages.setCurrentWidget(self.analysis_page)
         
 
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MyWindow()
+    window = CustomWindow()
     window.setWindowIcon(QIcon('Images\logo.jpg'))
     window.show()
     app.exec()

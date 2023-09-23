@@ -1,10 +1,10 @@
 Done    1. Grid View        
 Done    2. Welcome Text
+Done	3. X-axis time thik kora lagbe
+Done 	4. Vertical height gula fixed.
 Done    6. .exe file universal
 
 
-3. X-axis time thik kora lagbe
-4. Vertical height gula fixed.
 5. Analysis view: 
     Channel Name, 
     Total Duration, 
