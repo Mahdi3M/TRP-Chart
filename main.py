@@ -18,6 +18,8 @@ class CustomWindow(QMainWindow):
         self.chart = None
         self.data = None
         self.resolution = None
+        self.movie = QMovie('images\\loading.gif')
+        print(self.movie)
         
         # Define Widgets...
         menu_open_button = self.actionOpen
@@ -30,10 +32,14 @@ class CustomWindow(QMainWindow):
         self.analysis_page= self.findChild(QWidget, 'analysisPage')
         self.qa_page= self.findChild(QWidget, 'qaPage')
         self.result_page= self.findChild(QWidget, 'resultPage')
+        self.loading_page= self.findChild(QWidget, 'loadingPage')
         
         self.analysis_table= self.findChild(QTableWidget, 'analysisTable')
         self.next_button= self.findChild(QPushButton, 'nextButton')
         self.submit_button= self.findChild(QPushButton, 'submitButton')
+                
+        self.loading_gif= self.findChild(QLabel, 'animationLabel')
+        self.result_label= self.findChild(QLabel, 'resultLabel')
         
         copyright_label = self.findChild(QLabel, 'copyright')
         
@@ -144,7 +150,28 @@ class CustomWindow(QMainWindow):
                 
                 
     def showResultPage(self):
+        self.pages.setCurrentWidget(self.loading_page)
+        self.loading_gif.setMovie(self.movie)
+        
+        timer = QTimer(self.loading_gif)
+        self.start_loading()
+        timer.singleShot(3000, self.stop_loading)
+        
+        
+    def start_loading(self):
+        self.movie.start()
+        print("Loading Start")
+        
+        
+    def stop_loading(self):
+        self.movie.stop()
+        print("Loading End")
+        
         self.pages.setCurrentWidget(self.result_page)
+        channel = "Channel 1"
+        result = "Actual Watched Channel: " + channel
+        
+        self.result_label.setText(result)
         
 
 
