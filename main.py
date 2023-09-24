@@ -19,7 +19,6 @@ class CustomWindow(QMainWindow):
         self.data = None
         self.resolution = None
         self.movie = QMovie('images\\loading.gif')
-        print(self.movie)
         
         # Define Widgets...
         menu_open_button = self.actionOpen

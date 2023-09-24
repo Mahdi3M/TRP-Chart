@@ -163,8 +163,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1030</width>
-                <height>300</height>
+                <width>98</width>
+                <height>130</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -778,7 +778,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Asus/Desktop/Treetog-I-Documents.256.png</normaloff>C:/Users/Asus/Desktop/Treetog-I-Documents.256.png</iconset>
+     <normaloff>../icons/file.png</normaloff>../icons/file.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -837,7 +837,7 @@
   <action name="actionChart_View">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Asus/Desktop/Custom-Icon-Design-Pretty-Office-8-Bar-chart.256.png</normaloff>C:/Users/Asus/Desktop/Custom-Icon-Design-Pretty-Office-8-Bar-chart.256.png</iconset>
+     <normaloff>../icons/chart.png</normaloff>../icons/chart.png</iconset>
    </property>
    <property name="text">
     <string>Chart View</string>
@@ -846,7 +846,7 @@
   <action name="actionAnalysis_View">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Asus/Desktop/Custom-Icon-Design-Flatastic-4-Checklist.512.png</normaloff>C:/Users/Asus/Desktop/Custom-Icon-Design-Flatastic-4-Checklist.512.png</iconset>
+     <normaloff>../icons/analyze.png</normaloff>../icons/analyze.png</iconset>
    </property>
    <property name="text">
     <string>Analysis View</string>
