@@ -25,9 +25,9 @@ class Files():
                     
                 chart_groups[int(row[2])].append((row[0], row[1], row[3], row[4]))
                 
-                table_groups[int(row[2])][0] += float(row[1])
+                table_groups[int(row[2])][0] = round(table_groups[int(row[2])][0]+float(row[1]), 2)
                 table_groups[int(row[2])][1] += 1
-                table_groups[int(row[2])][2] = min(float(row[1]), table_groups[int(row[2])][2])
+                table_groups[int(row[2])][2] = min(round(float(row[1]), 2), table_groups[int(row[2])][2])
                 table_groups[int(row[2])][3] = max(float(row[1]), table_groups[int(row[2])][3])
                 table_groups[int(row[2])][4] = min(row[3], table_groups[int(row[2])][4])
                 table_groups[int(row[2])][5] = max(row[4], table_groups[int(row[2])][5])

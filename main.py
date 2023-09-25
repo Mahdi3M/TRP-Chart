@@ -122,17 +122,12 @@ class CustomWindow(QMainWindow):
             else:
                 self.analysis_table.setColumnWidth(col, max((self.resolution.width()-175)//7, 100))
         
-        # print(self.resolution.width())
         row_count = len(self.data['table_data'])
         self.analysis_table.setRowCount(row_count)
 
         header = self.analysis_table.horizontalHeader()
         for col in range(7):
-            header.setStyleSheet(
-                "QHeaderView::section {"
-                f"background-color: #d4d4d4;"
-                "}"
-            )
+            header.setStyleSheet("QHeaderView::section {background-color: #d4d4d4;}")
             
         for row, (key, values) in enumerate(self.data['table_data'].items()):
             item = QTableWidgetItem("Channel " + str(key))
@@ -154,6 +149,11 @@ class CustomWindow(QMainWindow):
         
         timer = QTimer(self.loading_gif)
         self.start_loading()
+        
+        channel = max(self.data['table_data'], key=lambda k: self.data['table_data'][k][0])
+        result = "Actual Watched Channel: Channel " + str(channel)
+        self.result_label.setText(result)       
+        
         timer.singleShot(3000, self.stop_loading)
         
         
@@ -164,13 +164,8 @@ class CustomWindow(QMainWindow):
         
     def stop_loading(self):
         self.movie.stop()
-        print("Loading End")
-        
         self.pages.setCurrentWidget(self.result_page)
-        channel = "Channel 1"
-        result = "Actual Watched Channel: " + channel
-        
-        self.result_label.setText(result)
+        print("Loading End")
         
 
 

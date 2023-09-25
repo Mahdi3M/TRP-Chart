@@ -30,7 +30,7 @@
        <string notr="true">background-color: white;</string>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="welcomePage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -664,22 +664,18 @@
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
          <widget class="QWidget" name="loadingWidget" native="true">
-          <widget class="QLabel" name="animationLabel">
-           <property name="geometry">
-            <rect>
-             <x>11</x>
-             <y>11</y>
-             <width>1010</width>
-             <height>420</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
+           <item>
+            <widget class="QLabel" name="animationLabel">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
