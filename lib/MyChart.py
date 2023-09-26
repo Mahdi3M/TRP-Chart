@@ -29,7 +29,7 @@ class CustomChart():
             for row in groups[channel_id]:
                 bar_margin_left.append((row[2] - earliest_start_time).total_seconds() / 60)
                 bar_durations.append(row[1])
-                bars_data.append({'start': row[2], 'end': row[3]})
+                bars_data.append({'start': row[2], 'end': row[3], 'duration': row[1]})
                     
             y = [idx] * len(bar_margin_left)
 
@@ -72,5 +72,6 @@ class CustomChart():
         bar = sel.index
         start_time = self.bars_data[channel][bar]['start'].strftime("%d/%m/%Y %H:%M")
         finish_time = self.bars_data[channel][bar]['end'].strftime("%d/%m/%Y %H:%M")
-        annotation_text = f"Start: {start_time}\nFinish: {finish_time}"
+        duration = self.bars_data[channel][bar]['duration']
+        annotation_text = f"Start: {start_time}\nFinish: {finish_time}\nDuration: {duration}"
         sel.annotation.set_text(annotation_text)
