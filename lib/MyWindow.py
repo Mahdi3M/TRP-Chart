@@ -10,7 +10,7 @@ from datetime import datetime
 class CustomWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("lib/interface.ui", self)
+        loadUi("lib\\interface.ui", self)
         
         self.chart = None
         self.data = None
